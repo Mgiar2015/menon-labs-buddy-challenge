@@ -27,8 +27,8 @@ export default function BasicTable(props) {
               <TableCell component="th" scope="row">
                 {row.date}
               </TableCell>
-              <TableCell align="right">{row.temp}</TableCell>
-              <TableCell align="right">{row.humidity}</TableCell>
+              <TableCell align="right">{row.temp}°F</TableCell>
+              <TableCell align="right">{row.humidity}%</TableCell>
             </TableRow>
           ))}
         </TableBody>

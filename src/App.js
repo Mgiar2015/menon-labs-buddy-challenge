@@ -13,6 +13,9 @@ function App() {
   const [maxFilter,setMax] = useState(1000000);
   const [minFilter,setMin] = useState(-1000);
 
+  const kelvinToF = (kelvin) => {
+    return (((kelvin-273.15)*1.8)+32).toFixed(2);
+  }
 
   const pullWeatherData = async() => {
     const lat = "33.441792";
@@ -22,7 +25,7 @@ function App() {
     //console.log(esponse.data.daily.map(dateData => dateData.)
     setWeatherData(response.data.daily.map(dateData =>  ({
       "date" : new Date(dateData.dt*1000).toLocaleDateString("en-US"),
-      "temp" : dateData.temp.day,
+      "temp" : kelvinToF(dateData.temp.day),
       "humidity": dateData.humidity
       })
     ));
@@ -61,7 +64,7 @@ function App() {
     <div className="App">
       <Grid container direction="row" justify="center" alignItems="center" >
         <form onSubmit={setLimits}>
-          <TextField id="standard-basic" type="number" label="Below" />
+          <TextField id="standard-basic" type="number" label="Minimum Tempature" />
           <TextField id="standard-basic" type="number" label="Above" />
           <Button type="submit" variant="contained">Get Data</Button>
         </form>
