@@ -5,10 +5,14 @@ import Table from './components/Table';
 
 
 
+
 function App() {
   const apiKey = "7083cd16161bdb6686c87eb80fd31922"
   const [weatherData,setWeatherData] = useState(null);
-  const [cords,setCords] = useState(null);
+  const [maxFilter,setMax] = useState(1000000);
+  const [minFilter,setMin] = useState(-1000);
+  const cook = true
+
 
   const pullWeatherData = async() => {
     const lat = "33.441792";
@@ -25,21 +29,47 @@ function App() {
     console.log(response.data);
   }
 
-  useEffect(pullWeatherData,[cords]);
+  const filterData = (max,min,data) => {
+    let filteredResults = [];
+    console.log(max);
+    console.log(min);
+    data.forEach(dateData => {
+      if (dateData.temp >= min && dateData.temp <= max){
+        console.log("Added Bitch");
+        filteredResults.push(dateData);
+      }
+    })
+
+    return filteredResults; 
+  }
+  
+  const setLimits = (e) => {
+    e.preventDefault()
+    if(e.target[0].value.length){
+      setMin(parseInt(e.target[0].value));
+    }
+    if(e.target[1].value.length){
+      setMax(parseInt(e.target[1].value));
+    }
+  }
+
+
+
+  useEffect(pullWeatherData,[cook]);
   //pullWeatherData()
 
   return (
     <div className="App">
-      <FormControl>
-        <TextField id="standard-basic" label="Longitude" />
-        <TextField id="standard-basic" label="Lattitude" />
-        <Button>Get Data</Button>
-      </FormControl>
+      <form onSubmit={setLimits}>
+        <TextField id="standard-basic" label="Below" />
+        <TextField id="standard-basic" label="Above" />
+        <Button type="submit" style="contained">Get Data</Button>
+      </form>
       
       <FormControl
             placeholder="Enter city"
           />
-      {weatherData && <Table data={weatherData}/>}
+      {weatherData && <Table data={filterData(maxFilter,minFilter,weatherData)}/>}
     </div>
   );
 }

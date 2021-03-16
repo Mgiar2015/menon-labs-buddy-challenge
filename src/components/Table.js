@@ -8,10 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+
 export default function BasicTable(props) {
 
-  return (
-    <TableContainer component={Paper}>
+    return (
+    <TableContainer component={Paper} >
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
