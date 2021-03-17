@@ -4,7 +4,6 @@ import axios from 'axios';
 import Table from './components/Table';
 import { Grid } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import { alert } from 'globalthis/implementation';
 
 
 function App() {
@@ -18,28 +17,10 @@ function App() {
     return (((kelvin-273.15)*1.8)+32).toFixed(2);
   }
 
- /* const getLocation=()=>{
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getCoordinates);
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }*/
-
-  /*
-  const getCoordinates(position){
-    setCordinates(position.coords.latitude);
-    setCoordinates(position.coords.longitude);
-   
-
-  }*/
-
   const pullWeatherData = async() => {
-    const lat = "33.441792";
-    const long = "-94.037689";
+    console.log("Pulling weather data");
     const apiUrl = "https://api.openweathermap.org/data/2.5/onecall?exclude=hourly,minutely,alerts,current&lat="+cordinates[0]+"&lon="+cordinates[1]+"&appid="+apiKey
     const response = await axios.get(apiUrl);
-    //console.log(esponse.data.daily.map(dateData => dateData.)
     setWeatherData(response.data.daily.map(dateData =>  ({
       "date" : new Date(dateData.dt*1000).toLocaleDateString("en-US"),
       "temp" : kelvinToF(dateData.temp.day),
@@ -51,11 +32,8 @@ function App() {
 
   const filterData = (max,min,data) => {
     let filteredResults = [];
-    console.log(max);
-    console.log(min);
     data.forEach(dateData => {
       if (dateData.temp >= min && dateData.temp <= max){
-        console.log("Added Bitch");
         filteredResults.push(dateData);
       }
     })
@@ -82,7 +60,7 @@ function App() {
       <Grid container direction="row" justify="center" alignItems="center" >
         <form onSubmit={setLimits}>
           <TextField id="standard-basic" type="number" label="Minimum Tempature" />
-          <TextField id="standard-basic" type="number" label="Above" />
+          <TextField id="standard-basic" type="number" label="Max Tempature" />
           <Button type="submit" variant="contained">Get Data</Button>
         </form>
         {weatherData && <Table data={filterData(maxFilter,minFilter,weatherData)}/>}
