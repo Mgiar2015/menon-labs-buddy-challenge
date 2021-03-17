@@ -4,6 +4,7 @@ import axios from 'axios';
 import Table from './components/Table';
 import { Grid } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import { alert } from 'globalthis/implementation';
 
 
 function App() {
@@ -16,6 +17,22 @@ function App() {
   const kelvinToF = (kelvin) => {
     return (((kelvin-273.15)*1.8)+32).toFixed(2);
   }
+
+ /* const getLocation=()=>{
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getCoordinates);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }*/
+
+  /*
+  const getCoordinates(position){
+    setCordinates(position.coords.latitude);
+    setCoordinates(position.coords.longitude);
+   
+
+  }*/
 
   const pullWeatherData = async() => {
     const lat = "33.441792";
